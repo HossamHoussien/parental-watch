@@ -4,6 +4,9 @@
 
 2. Run DB migration with seed
 
+3. Run composer install
+
+4. Run npm install
 
 
 ### Work Flow
