@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Http\Controllers\Parent;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class HomeController extends Controller
+{
+    
+    public function __invoke()
+    {
+        return view('parent.home');
+    }
+}
