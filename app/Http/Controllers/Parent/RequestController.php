@@ -23,7 +23,7 @@ class RequestController extends Controller
         $req->to_type = $request->to_type;
         
         $req->save();
-        return redirect()->back();
+        return response()->json(['message' => 'Request has been sent'], 200);
                         
     }
 

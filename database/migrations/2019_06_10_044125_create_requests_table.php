@@ -21,8 +21,8 @@ class CreateRequestsTable extends Migration
             $table->string('from_type');
             $table->string('to_type');
             
-            $table->boolean('accepted')->default(0);
-            $table->boolean('declined')->default(0);
+            $table->boolean('processed')->default(0);
+            $table->text('message')->default(null);
             $table->timestamps();
         });
     }

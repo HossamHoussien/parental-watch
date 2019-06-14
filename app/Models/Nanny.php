@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Request as JobRequest;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -45,4 +46,19 @@ class Nanny extends Authenticatable
     public function getGuardAttribute(){
         return 'nanny';
     }
+
+    
+    public function requests(){
+        return $this->hasMany(JobRequest::class, 'to_id')->where('to_type', get_class($this))->whereProcessed(0);
+    } 
+
+    
+    public function hiringCount(){
+        return $this->history->count();
+    }
+    
+    public function history(){
+        return $this->hasMany(History::class, 'hireable')->where('hireable_type', Nanny::class);
+    }
+
 }

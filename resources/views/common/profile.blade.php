@@ -40,7 +40,7 @@
 
                     <span title="Hiring Count">
                         <i class="fas fa-stopwatch mx-1"></i>
-                        {{ $user->hireCount }}
+                        {{ $user->hiringCount() }}
                     </span>
 
                 </div>

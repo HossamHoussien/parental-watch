@@ -21,6 +21,6 @@ Route::domain('parent.parents.test')->group(function () {
     Route::get('/tutors', 'SearchController@tutors')->name('search.tutors');
     Route::get('/tutors/profile/{user}', 'ProfileController@tutor')->name('profile.tutor');
 
-    Route::get('/requests/store', 'RequestController@store')->name('requests.store');
+    Route::post('/requests/store', 'RequestController@store')->name('requests.store');
 
 });

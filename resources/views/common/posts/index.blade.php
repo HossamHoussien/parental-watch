@@ -20,15 +20,22 @@ $type = currentUser()->guard;
                 && !str_contains(strtolower($post->user_type),
                 $type) )
                 <div class="posted-by">
-                    <a href="{{ route('parent.requests.store') }}?to_id={{ $post->owner->id }}&to_type={{ get_class($post->owner) }}"
-                        class="btn btn-primary">Request Services</a>
+                    @if (currentUser()->hasRequest($post->owner))
+                    <button class="btn btn-success">Request Sent</button>
+
+                    @else
+                    <button
+                        url="{{ route('parent.requests.store') }}?to_id={{ $post->owner->id }}&to_type={{ get_class($post->owner) }}"
+                        class="btn btn-primary" onclick="requestSent(this)">Request Services</button>
+                    @endif
+
                 </div>
                 @endif
 
                 @if ($type == 'nanny'
                 && !currentUser()->is($post->owner)
-                && !str_contains(strtolower($post->user_type),
-                $type) )
+                && $post->owner->guard == 'parent'
+                )
                 <div class="posted-by">
                     <button class="btn btn-primary">Apply</button>
                 </div>
@@ -36,8 +43,8 @@ $type = currentUser()->guard;
 
                 @if ($type == 'tutor'
                 && !currentUser()->is($post->owner)
-                && !str_contains(strtolower($post->user_type),
-                $type) )
+                && $post->owner->guard == 'parent'
+                )
                 <div class="posted-by">
                     <button class="btn btn-primary">Apply</button>
                 </div>
@@ -56,3 +63,18 @@ $type = currentUser()->guard;
 
 </div>
 @endsection
+
+@push('js')
+<script>
+    function requestSent(el) {
+        if ($(el).hasClass('btn-primary')) {
+            axios.post($(el).attr('url')).then((response) => {
+                $(el).text('Request Sent');
+                $(el).toggleClass('btn-primary btn-success');
+            });
+        }
+
+    }
+
+</script>
+@endpush

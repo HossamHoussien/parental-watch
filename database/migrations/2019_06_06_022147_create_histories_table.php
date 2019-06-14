@@ -19,6 +19,7 @@ class CreateHistoriesTable extends Migration
             $table->unsignedBigInteger('child_id')->nullable();
             $table->unsignedBigInteger('hireable');            
             $table->string('hireable_type');            
+            $table->boolean('status')->default(0);            
             $table->timestamps();
         });
     }

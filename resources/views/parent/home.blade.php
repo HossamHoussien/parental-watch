@@ -30,25 +30,51 @@ $parent = currentUser();
             </div>
 
             <div class="hire-now text-center mt-5">
-                <a href="{{ route('parent.posts.create') }}" class="btn btn-dark btn-lg">New Post</a>
+                <a href="{{ route('posts.create') }}" class="btn btn-dark btn-lg">New Post</a>
             </div>
         </div>
     </div>
     <div class="container mt-5 mb-5 timeline">
         <div class="row">
             <div class="col-md-6 offset-md-3">
+                <h3 class="bold mb-4">Pending Requests <span class="help-text">Waiting approval</span></h3>
+                <ul class="timeline">
+                    @foreach ($parent->requests->sortByDesc('created_at') as $request)
+                    <li class="pending">
+                        <span class="hire-date float-right"
+                            title="{{ $request->created_at->todayDateTimeString() }}">{{ $request->created_at->diffForHumans() }}</span>
+                        <p>You requested <span class="bold">
+                                <a href="{{ route('parent.profile.'.$request->to->guard, $request->to_id) }}">
+                                    <span>{{  $request->to->name }}</span>
+                                </a>
+                            </span>
+                            <span>'s services</span>
+                        </p>
+                    </li>
+                    @endforeach
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5 mb-5 timeline">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
                 <h3 class="bold mb-4">Hiring Histroy</h3>
                 <ul class="timeline">
                     @foreach ($parent->history->sortByDesc('created_at') as $history)
-                    <li>
-                        <a href="{{ route('parent.profile.'.$history->hired->guard, $history->hireable) }}">
-                            <span>{{  $history->hired->name }}</span>
-                            <span class="hired-username"><span>@</span>{{ $history->hired->username }}</span>
-
-                        </a>
+                    <li class="{{ $history->status ? ' accepted' : 'declined'}}">
                         <span class="hire-date float-right"
                             title="{{ $history->created_at->todayDateTimeString() }}">{{ $history->created_at->diffForHumans() }}</span>
-                        <p>You hired a <span class="bold">{{ $history->hired->guard }}</span> for your children</p>
+                        <p>
+                            <span class="bold">
+                                <a href="{{ route('parent.profile.'.$history->hired->guard, $history->hireable) }}">
+                                    <span>{{  $history->hired->name }}</span>
+                                </a>
+                            </span>
+                            <span> {{ $history->status ? ' accepted' : 'declined'}} your request</span>
+                        </p>
                     </li>
                     @endforeach
 

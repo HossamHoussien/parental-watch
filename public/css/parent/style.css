@@ -129,15 +129,15 @@
 .nannies-search .nannies-container .card {
   border: 0;
   /* .card-header {
-            .name {
-                font-weight: bold;
-            }
+      .name {
+          font-weight: bold;
+      }
 
-            .username {
-                color: #aaa;
-                font-size: 13px;
-            }
-        } */
+      .username {
+          color: #aaa;
+          font-size: 13px;
+      }
+  } */
 }
 
 .nannies-search .nannies-container .card .card-body label {
@@ -237,13 +237,24 @@
   text-decoration: underline;
 }
 
+.home .timeline ul.timeline > li.pending:before {
+  border: 3px solid #22c0e8;
+}
+
+.home .timeline ul.timeline > li.accepted:before {
+  border: 3px solid #6fb700;
+}
+
+.home .timeline ul.timeline > li.declined:before {
+  border: 3px solid #ff6060;
+}
+
 .home .timeline ul.timeline > li:before {
   content: " ";
   background: white;
   display: inline-block;
   position: absolute;
   border-radius: 50%;
-  border: 3px solid #22c0e8;
   left: -10px;
   width: 20px;
   height: 20px;

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Request as JobRequest;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -54,5 +55,21 @@ class ParentUser extends Authenticatable
     public function getGuardAttribute(){
         return 'parent';
     }
+    
+    public function requests(){
+        return $this->hasMany(JobRequest::class, 'from_id')->whereProcessed(0);
+    } 
+
+    public function hasRequest($hired){
+        return JobRequest::where([
+            'from_id' => $this->id,
+            'to_id' => $hired->id,
+            'from_type' => get_class($this),
+            'to_type' => get_class($hired),
+            'processed' => 0 
+        ])->exists();
+    }
+
+    
     
 }
