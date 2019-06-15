@@ -1,13 +1,22 @@
 # parental-watch
 
-1. Make sure to configure virtual host in order to run this app as it works on subdoamins.
+* Make sure to configure virtual host in order to run this app as it works on subdoamins.
 
-2. Run DB migration with seed
+* Create DB manually using phpmyadmin only DB, tables will be generated automatically
 
-3. Run composer install
+* Generate app key ```php artisan key:generate```
 
-4. Run npm install
+* Open```.env``` file in the root directory and change DB credentials 
 
+* Open```.env``` file in the root directory and change APP_NAME, APP_URL to match the virtualhost
+
+* Run npm install ```npm install```
+
+* Run composer install ```composer install```
+
+* Run DB migration with seed ```php artisan migrate:fresh --seed```
+
+* Open browser and enter "domain name"
 
 ### Work Flow
 * Three subdomains exist, 'parent', 'nanny', 'tutor'
@@ -23,9 +32,8 @@
 * Nanny/tutor can apply when clicking on Apply on any parent posts
 * Parent can accept/decline nanny's / tutor's requests
 * Homepage Added
+
+
 ### TODO
-
-
-
 * Parent can search for vaccations in neaby hospitals
 
