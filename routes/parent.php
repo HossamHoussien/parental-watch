@@ -22,5 +22,8 @@ Route::domain('parent.parents.test')->group(function () {
     Route::get('/tutors/profile/{user}', 'ProfileController@tutor')->name('profile.tutor');
 
     Route::post('/requests/store', 'RequestController@store')->name('requests.store');
+    Route::get('/requests', 'RequestController@index')->name('requests.index');
+    Route::get('/requests/accept/{id}', 'RequestController@accept')->name('requests.accept');
+    Route::get('/requests/decline/{id}', 'RequestController@decline')->name('requests.decline');
 
 });

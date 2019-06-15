@@ -48,17 +48,33 @@ class Nanny extends Authenticatable
     }
 
     
-    public function requests(){
-        return $this->hasMany(JobRequest::class, 'to_id')->where('to_type', get_class($this))->whereProcessed(0);
+    public function requests_from(){
+        return $this->hasMany(JobRequest::class, 'from_id')->whereProcessed(0);
+    } 
+    public function requests_to(){
+        return $this->hasMany(JobRequest::class, 'to_id')->whereProcessed(0);
     } 
 
+    public function getRequestsAttribute(){
+        return $this->requests_from->merge($this->requests_to);
+    }
     
     public function hiringCount(){
-        return $this->history->count();
+        return $this->history->where('status', 1)->count();
     }
     
     public function history(){
         return $this->hasMany(History::class, 'hireable')->where('hireable_type', Nanny::class);
+    }
+
+    public function hasRequest($hired){
+        return JobRequest::where([
+            'from_id' => $this->id,
+            'to_id' => $hired->id,
+            'from_type' => get_class($this),
+            'to_type' => get_class($hired),
+            'processed' => 0 
+        ])->exists();
     }
 
 }

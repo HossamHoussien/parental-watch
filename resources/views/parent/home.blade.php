@@ -34,6 +34,8 @@ $parent = currentUser();
             </div>
         </div>
     </div>
+
+
     <div class="container mt-5 mb-5 timeline">
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -43,13 +45,32 @@ $parent = currentUser();
                     <li class="pending">
                         <span class="hire-date float-right"
                             title="{{ $request->created_at->todayDateTimeString() }}">{{ $request->created_at->diffForHumans() }}</span>
-                        <p>You requested <span class="bold">
+                        @if ($request->to->guard == 'parent')
+                        <p>
+                            <span class="bold">
+                                <a href="{{ route('parent.profile.'.$request->from->guard, $request->from_id) }}">
+                                    <span>{{  $request->from->name }}</span>
+                                </a>
+                            </span>
+                            <span> offers {{ $request->from->gender == 'm' ? 'his' : 'her' }} services.</span>
+                        </p>
+                        <div>
+                            <button class="btn btn-success btn-sm"
+                                onclick="window.location.assign('{{ route('parent.requests.accept', $request->id) }}')">Accpet</button>
+                            <button class="btn btn-danger btn-sm"
+                                onclick="window.location.assign('{{ route('parent.requests.decline', $request->id) }}')">Decline</button>
+                        </div>
+                        @else
+                        <p>You requested
+                            <span class="bold">
                                 <a href="{{ route('parent.profile.'.$request->to->guard, $request->to_id) }}">
                                     <span>{{  $request->to->name }}</span>
                                 </a>
                             </span>
                             <span>'s services</span>
                         </p>
+                        @endif
+
                     </li>
                     @endforeach
 
@@ -57,6 +78,7 @@ $parent = currentUser();
             </div>
         </div>
     </div>
+
 
     <div class="container mt-5 mb-5 timeline">
         <div class="row">
@@ -67,6 +89,17 @@ $parent = currentUser();
                     <li class="{{ $history->status ? ' accepted' : 'declined'}}">
                         <span class="hire-date float-right"
                             title="{{ $history->created_at->todayDateTimeString() }}">{{ $history->created_at->diffForHumans() }}</span>
+
+                        @if ($history->by_parent)
+                        <p>You {{ $history->status ? ' accepted' : 'declined'}}
+                            <span class="bold">
+                                <a href="{{ route('parent.profile.'.$history->hired->guard, $history->hireable) }}">
+                                    <span>{{  $history->hired->name }}</span>
+                                </a>
+                            </span>
+                            <span>'s request</span>
+                        </p>
+                        @else
                         <p>
                             <span class="bold">
                                 <a href="{{ route('parent.profile.'.$history->hired->guard, $history->hireable) }}">
@@ -75,6 +108,8 @@ $parent = currentUser();
                             </span>
                             <span> {{ $history->status ? ' accepted' : 'declined'}} your request</span>
                         </p>
+                        @endif
+
                     </li>
                     @endforeach
 

@@ -11,7 +11,7 @@
 |
 */
 
-Route::view('/', 'parent.home');
+Route::view('/', 'homepage');
 
 
 Route::resource('/posts', 'PostController');

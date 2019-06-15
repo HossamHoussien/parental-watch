@@ -46,20 +46,26 @@ class ParentUser extends Authenticatable
     }
     
     public function nanniesHiringCount(){
-        return $this->history->where('hireable_type', Nanny::class)->count();
+        return $this->history->where('hireable_type', Nanny::class)->where('status', 1)->count();
     }
     public function tutorsHiringCount(){
-        return $this->history->where('hireable_type', Tutor::class)->count();
+        return $this->history->where('hireable_type', Tutor::class)->where('status', 1)->count();
     }
     
     public function getGuardAttribute(){
         return 'parent';
     }
     
-    public function requests(){
+    public function requests_from(){
         return $this->hasMany(JobRequest::class, 'from_id')->whereProcessed(0);
     } 
-
+    public function requests_to(){
+        return $this->hasMany(JobRequest::class, 'to_id')->whereProcessed(0);
+    } 
+    public function getRequestsAttribute(){
+        return $this->requests_from->merge($this->requests_to);
+    }
+    
     public function hasRequest($hired){
         return JobRequest::where([
             'from_id' => $this->id,

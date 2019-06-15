@@ -13,6 +13,7 @@ Route::domain('tutor.parents.test')->group(function () {
 
     
     Route::get('/requests', 'RequestController@index')->name('requests.index');
+    Route::get('/requests/apply', 'RequestController@apply')->name('requests.apply');
     Route::get('/requests/accept/{id}', 'RequestController@accept')->name('requests.accept');
     Route::get('/requests/decline/{id}', 'RequestController@decline')->name('requests.decline');
 });

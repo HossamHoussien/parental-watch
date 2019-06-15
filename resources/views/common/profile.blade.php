@@ -120,10 +120,9 @@
         </div>
         <div class="col-md-9 position-relative">
             @auth('parent')
-            <form action="{{ route('parent.hire') }}" method="post" id="hire-form">
+            <form action="{{ route('parent.requests.store') }}?to_id={{ $user->id }}&to_type={{ get_class($user) }}"
+                method="post" id="hire-form">
                 @csrf
-                <input type="hidden" name="type" value="{{ $user->class_name }}">
-                <input type="hidden" name="hireable_id" value="{{ $user->id }}">
             </form>
             <button type="submit" class="btn btn-primary hire-me position-absolute" data-toggle="modal"
                 data-target="#exampleModal">Hire Me</button>

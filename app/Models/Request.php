@@ -15,7 +15,7 @@ class Request extends Model
     ]; */
 
     public function from(){
-        return $this->belongsTo(ParentUser::class, 'from_id');
+        return $this->belongsTo($this->from_type, 'from_id');
     }
     public function to(){
         return $this->belongsTo($this->to_type,  'to_id');

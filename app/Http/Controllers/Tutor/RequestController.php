@@ -34,6 +34,7 @@ class RequestController extends Controller
             $history->hireable = $to->id;
             $history->hireable_type = get_class($to);
             $history->status = 1;
+            $history->by_parent = 0;
             $history->save();
             
         }
@@ -56,6 +57,8 @@ class RequestController extends Controller
             $history->hireable = $to->id;
             $history->hireable_type = get_class($to);
             $history->status = 0;
+            $history->by_parent = 0;
+
             $history->save();
             
         }
@@ -65,7 +68,8 @@ class RequestController extends Controller
 
   
 
-    public function store(Request $request)
+
+    public function apply(Request $request)
     {
         $req = new JobRequest;
         $req->from_id = \currentUser()->id;
@@ -75,7 +79,7 @@ class RequestController extends Controller
         $req->to_type = $request->to_type;
         
         $req->save();
-        return redirect()->back();
+        return response()->json(['message' => 'Applied'], 200);
                         
     }
 

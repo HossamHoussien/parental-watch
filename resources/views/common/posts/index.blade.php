@@ -37,8 +37,15 @@ $type = currentUser()->guard;
                 && $post->owner->guard == 'parent'
                 )
                 <div class="posted-by">
-                    <button class="btn btn-primary">Apply</button>
+                    @if (currentUser()->hasRequest($post->owner))
+                    <button class="btn btn-success">Applied</button>
+
+                    @else
+                    <button
+                        url="{{ route('nanny.requests.apply') }}?to_id={{ $post->owner->id }}&to_type={{ get_class($post->owner) }}"
+                        class="btn btn-primary" onclick="apply(this)">Apply</button>
                 </div>
+                @endif
                 @endif
 
                 @if ($type == 'tutor'
@@ -46,8 +53,15 @@ $type = currentUser()->guard;
                 && $post->owner->guard == 'parent'
                 )
                 <div class="posted-by">
-                    <button class="btn btn-primary">Apply</button>
+                    @if (currentUser()->hasRequest($post->owner))
+                    <button class="btn btn-success">Applied</button>
+
+                    @else
+                    <button
+                        url="{{ route('tutor.requests.apply') }}?to_id={{ $post->owner->id }}&to_type={{ get_class($post->owner) }}"
+                        class="btn btn-primary" onclick="apply(this)">Apply</button>
                 </div>
+                @endif
                 @endif
 
             </h5>
@@ -70,6 +84,16 @@ $type = currentUser()->guard;
         if ($(el).hasClass('btn-primary')) {
             axios.post($(el).attr('url')).then((response) => {
                 $(el).text('Request Sent');
+                $(el).toggleClass('btn-primary btn-success');
+            });
+        }
+
+    }
+
+    function apply(el) {
+        if ($(el).hasClass('btn-primary')) {
+            axios.get($(el).attr('url')).then((response) => {
+                $(el).text('Applied');
                 $(el).toggleClass('btn-primary btn-success');
             });
         }

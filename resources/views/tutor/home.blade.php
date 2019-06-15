@@ -35,6 +35,14 @@ $tutor = currentUser();
                     <li class="pending">
                         <span class="hire-date float-right"
                             title="{{ $request->created_at->todayDateTimeString() }}">{{ $request->created_at->diffForHumans() }}</span>
+                        @if ($request->from->guard == 'tutor')
+                        <p>You offered your services to
+                            <a href="#" class="bold">
+                                <span>{{  $request->to->name }}</span>
+                            </a>
+                        </p>
+
+                        @else
                         <p>
                             <a href="#" class="bold">
                                 <span>{{  $request->from->name }}</span>
@@ -47,6 +55,8 @@ $tutor = currentUser();
                             <button class="btn btn-danger btn-sm"
                                 onclick="window.location.assign('{{ route('tutor.requests.decline', $request->id) }}')">Decline</button>
                         </div>
+                        @endif
+
                     </li>
                     @endforeach
 
@@ -54,6 +64,8 @@ $tutor = currentUser();
             </div>
         </div>
     </div>
+
+
 
     <div class="container mt-5 mb-5 timeline">
         <div class="row">
@@ -64,12 +76,25 @@ $tutor = currentUser();
                     <li class="{{ $history->status ? ' accepted' : 'declined'}}">
                         <span class="hire-date float-right"
                             title="{{ $history->created_at->todayDateTimeString() }}">{{ $history->created_at->diffForHumans() }}</span>
+
+                        @if ($history->by_parent)
+                        <p>
+                            <span class="bold">
+                                <a href="#">{{  $history->sender->name }}</a>
+                            </span>
+                            {{ $history->status ? 'approved' : 'declined' }}
+
+                            <span> your request</span>
+                        </p>
+                        @else
                         <p>You {{ $history->status ? 'approved' : 'declined' }}
                             <span class="bold">
                                 <a href="#">{{  $history->sender->name }}</a>
                             </span>
                             <span>'s request</span>
                         </p>
+                        @endif
+
                     </li>
                     @endforeach
 
