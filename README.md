@@ -20,11 +20,12 @@
 * All users can see/edt/delete thier accounts
 * Parent request nanny/tutor services by clicking request services button on nanny's/tutor's post
 * Nanny/tutor has the option to accept or decline the request (in case that the parent who asked to hire them)
-
+* Nanny/tutor can apply when clicking on Apply on any parent posts
+* Parent can accept/decline nanny's / tutor's requests
+* Homepage Added
 ### TODO
 
 
-* Nanny/tutor can apply when clicking on Apply on any parent posts
-* Parent can accept/decline nanny's / tutor's requests
+
 * Parent can search for vaccations in neaby hospitals
 
